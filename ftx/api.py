@@ -203,8 +203,6 @@ class FtxClient:
         To send a Trailing Stop order, set type='trailing_stop' and supply a trail_value
         """
 
-        import ipdb; ipdb.set_trace()
-
         assert type in ('stop', 'takeProfit', 'trailing_stop')
         assert type not in ('stop', 'take_profit') or trigger_price is not None, \
             'Need trigger prices for stop losses and take profits'
