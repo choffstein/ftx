@@ -202,11 +202,17 @@ class FtxClient:
         To send a Take Profit Market order, set type='trailing_stop' and supply a trigger_price
         To send a Trailing Stop order, set type='trailing_stop' and supply a trail_value
         """
-        assert type in ('stop', 'take_profit', 'trailing_stop')
+        assert type in ('stop', 'takeProfit', 'trailing_stop')
         assert type not in ('stop', 'take_profit') or trigger_price is not None, \
             'Need trigger prices for stop losses and take profits'
         assert type not in ('trailing_stop',) or (trigger_price is None and trail_value is not None), \
             'Trailing stops need a trail value and cannot take a trigger price'
+
+        api_type = {
+            'stop': 'stop',
+            'trailing_stop': 'trailingStop',
+            'take_profit': 'takeProfit'
+        }
 
         return self._post(
             'conditional_orders', {
@@ -215,7 +221,7 @@ class FtxClient:
                 'triggerPrice': trigger_price,
                 'size': size,
                 'reduceOnly': reduce_only,
-                'type': type,
+                'type': api_type[type],
                 'cancelLimitOnTrigger': cancel,
                 'orderPrice': limit_price
             })
