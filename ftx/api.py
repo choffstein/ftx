@@ -229,8 +229,11 @@ class FtxClient:
             })
 
     @authentication_required
-    def cancel_order(self, order_id: str) -> dict:
-        return self._delete(f'orders/{order_id}')
+    def cancel_order(self, order_id: str, conditional_order: bool = False) -> dict:
+        if not conditional_order:
+            return self._delete(f'orders/{order_id}')
+        else:
+            return self._delete(f'conditional_orders/{order_id}')
 
     @authentication_required
     def cancel_orders(self,
