@@ -202,6 +202,9 @@ class FtxClient:
         To send a Take Profit Market order, set type='trailing_stop' and supply a trigger_price
         To send a Trailing Stop order, set type='trailing_stop' and supply a trail_value
         """
+
+        import ipdb; ipdb.set_trace()
+
         assert type in ('stop', 'takeProfit', 'trailing_stop')
         assert type not in ('stop', 'take_profit') or trigger_price is not None, \
             'Need trigger prices for stop losses and take profits'
@@ -223,7 +226,8 @@ class FtxClient:
                 'reduceOnly': reduce_only,
                 'type': api_type[type],
                 'cancelLimitOnTrigger': cancel,
-                'orderPrice': limit_price
+                'orderPrice': limit_price,
+                'trailValue': trail_value
             })
 
     @authentication_required
